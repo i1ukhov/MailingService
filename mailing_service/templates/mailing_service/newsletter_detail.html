@@ -1,0 +1,17 @@
+{% extends 'mailing_service/base.html' %}
+{% block content %}
+<div class="row text-center">
+    <div class="col-12 col-xs-12">
+        <div class="card mb-3 box-shadow">
+            <div class="card-header">
+                <h5 class="my-0 font-weight-normal">Рассылка №{{object.pk}}</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">Время начала/завершения: {{object.start_time}} - {{object.end_time}} </p>
+                <p class="card-text">Статус: {{object.status}} </p>
+                <p class="card-text">Частота отправки: {{object.frequency}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

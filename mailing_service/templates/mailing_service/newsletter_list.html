@@ -1,0 +1,26 @@
+{% extends 'mailing_service/base.html' %}
+{% block content %}
+{% include 'mailing_service/includes/inc_buttons.html' %}
+<div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+    {% for object in object_list %}
+    <div class="col">
+        <div class="card mb-4 rounded-3 shadow-sm">
+            <div class="card-header py-3">
+                <h4 class="my-0 fw-normal"> Рассылка №{{object.pk}} </h4>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled mt-3 mb-5">
+                    <li>Статус: {{object.status}}</li>
+                    <li>Частота отправки: {{object.frequency}}</li>
+                    <li>Время начала/завершения: {{object.start_time}} - {{object.end_time}}</li>
+                </ul>
+                <a class="btn btn-secondary" href="{% url 'mailing_service:newsletter_update' object.pk %}"
+                   role="button">Редактировать</a>
+                <a class="btn btn-danger" href="{% url 'mailing_service:newsletter_delete' object.pk %}"
+                   role="button">Удалить</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

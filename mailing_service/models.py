@@ -30,7 +30,7 @@ class Message(models.Model):
 
 class Newsletter(models.Model):
     start_time = models.DateTimeField(verbose_name='время начала рассылки')
-    end_time = models.DateTimeField(verbose_name='время окончания рассылки')
+    end_time = models.DateTimeField(verbose_name='время окончания рассылки', **NULLABLE)
 
     daily = 'раз в день'
     weekly = 'раз в неделю'
@@ -44,8 +44,8 @@ class Newsletter(models.Model):
     newsletter_status = [(created, 'создана'), (started, 'запущена'), (completed, 'завершена')]
     status = models.CharField(max_length=50, verbose_name='статус рассылки', choices=newsletter_status, default=created)
 
-    client = models.ManyToManyField(Client, verbose_name='клиент', **NULLABLE)
-    message = models.ForeignKey(Message, on_delete=models.CASCADE, verbose_name='сообщение', **NULLABLE)
+    client = models.ManyToManyField(Client, verbose_name='клиент', blank=True)
+    message = models.ForeignKey(Message, on_delete=models.DO_NOTHING, verbose_name='сообщение', **NULLABLE)
 
     def __str__(self):
         return f'Рассылка №{self.pk}. Время: {self.start_time} - {self.end_time}. Статус: {self.status}. Частота: {self.frequency}.'
