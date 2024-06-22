@@ -4,14 +4,20 @@ from django.views.generic import ListView, DetailView, UpdateView, DeleteView, C
 
 from mailing_service.models import Newsletter, Client, Message, NewsletterTry
 
+from mailing_service.forms import ClientForm, MessageForm, NewsletterForm
+
 
 class NewsletterListView(ListView):
     model = Newsletter
 
 
+class NewsletterDetailView(DetailView):
+    model = Newsletter
+
+
 class NewsletterUpdateView(UpdateView):
     model = Newsletter
-    fields = ('start_time', 'end_time', 'frequency', 'status', 'client', 'message')
+    form_class = NewsletterForm
     success_url = reverse_lazy('mailing_service:newsletters_list')
 
 
@@ -22,19 +28,19 @@ class NewsletterDeleteView(DeleteView):
 
 class NewsletterCreateView(CreateView):
     model = Newsletter
-    fields = ('start_time', 'end_time', 'frequency', 'client', 'message')
+    form_class = NewsletterForm
     success_url = reverse_lazy('mailing_service:newsletters_list')
 
 
 class ClientCreateView(CreateView):
     model = Client
-    fields = ('fullname', 'email', 'comment')
+    form_class = ClientForm
     success_url = reverse_lazy('mailing_service:clients_list')
 
 
 class ClientUpdateView(UpdateView):
     model = Client
-    fields = ('fullname', 'email', 'comment')
+    form_class = ClientForm
     success_url = reverse_lazy('mailing_service:clients_list')
 
 
@@ -57,13 +63,13 @@ class MessageListView(ListView):
 
 class MessageCreateView(CreateView):
     model = Message
-    fields = ('subject', 'body')
+    form_class = MessageForm
     success_url = reverse_lazy('mailing_service:messages_list')
 
 
 class MessageUpdateView(UpdateView):
     model = Message
-    fields = ('subject', 'body')
+    form_class = MessageForm
     success_url = reverse_lazy('mailing_service:messages_list')
 
 

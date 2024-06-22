@@ -61,7 +61,7 @@ class NewsletterTry(models.Model):
     response = models.TextField(verbose_name='ответ сервера', **NULLABLE)
 
     newsletter = models.ForeignKey(Newsletter, on_delete=models.DO_NOTHING, verbose_name='рассылка')
-    client = models.ForeignKey(Client, on_delete=models.DO_NOTHING, verbose_name='клиент')
+    client = models.ManyToManyField(Client, verbose_name='клиенты', blank=True)
 
     def __str__(self):
         return f'Попытка рассылки №{self.pk}. Дата и время: {self.last_try_time}. Результат: {self.success}.'

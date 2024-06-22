@@ -22,10 +22,13 @@
         <tbody>
         {% for object in object_list %}
         <tr>
-            <th scope="row"></th>
             <td>{{object.pk}}</td>
-            <td>{{object.success}}</td>
-            <td>{{object.last_time_try}}</td>
+            {% if object.success %}
+            <td>"Успешно"</td>
+            {% else %}
+            <td>"Неуспешно"</td>
+            {% endif %}
+            <td>{{object.last_try_time}}</td>
             <td>{{object.response}}</td>
         </tr>
         {% endfor %}

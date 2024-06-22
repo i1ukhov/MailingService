@@ -25,6 +25,6 @@ class NewsletterAdmin(admin.ModelAdmin):
 
 @admin.register(NewsletterTry)
 class NewsletterTryAdmin(admin.ModelAdmin):
-    list_display = ('success', 'response', 'newsletter', 'client')
+    list_display = ('success', 'response', 'newsletter')
     search_fields = ('last_time_try', 'success', 'response', 'newsletter', 'client')
     list_filter = ('success', 'response', 'newsletter', 'client')
