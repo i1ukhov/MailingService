@@ -1,9 +1,11 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.cache import cache
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView, CreateView, TemplateView
 
+from config.settings import CACHE_ENABLED
 from mailing_service.models import Newsletter, Client, Message, NewsletterTry
 
 from mailing_service.forms import ClientForm, MessageForm, NewsletterForm, NewsletterModeratorForm
@@ -95,10 +97,26 @@ class Homepage(TemplateView):
         context_data['active_newsletter_count'] = Newsletter.objects.filter(is_active=True).exclude(
             status='завершена').count()
         context_data['unique_clients_count'] = Client.objects.all().count()
-        articles = list(Article.objects.all())
+        articles = self.get_articles_from_cache()
         random.shuffle(articles)
         context_data['some_articles'] = articles[0:3]
         return context_data
+
+    @staticmethod
+    def get_articles_from_cache():
+        if CACHE_ENABLED:
+            # Проверяем включенность кеша
+            key = f'articles'  # Создаем ключ для хранения
+            articles = cache.get(key)  # Пытаемся получить данные
+            if articles is None:
+                # Если данные не были получены из кеша, то выбираем из БД и записываем в кеш
+                articles = list(Article.objects.all())
+                cache.set(key, articles)
+        else:
+            # Если кеш не был подключен, то просто обращаемся к БД
+            articles = Article.objects.all()
+        # Возвращаем результат
+        return list(articles)
 
 
 class MessageDetailView(LoginRequiredMixin, DetailView):

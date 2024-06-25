@@ -1,4 +1,5 @@
 from django.urls import path
+from django.views.decorators.cache import cache_page
 
 from mailing_service.apps import MailingServiceConfig
 
