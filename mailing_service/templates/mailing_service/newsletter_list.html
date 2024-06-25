@@ -13,7 +13,9 @@
                 <ul class="list-unstyled">
                     <li>Статус: {{newsletter.status}}</li>
                     <li>Частота отправки: {{newsletter.frequency}}</li>
-                    <li>Время начала/завершения: {{newsletter.start_time}} - {{newsletter.end_time}}</li>
+                    {% if newsletter.status != 'завершена' %}
+                    <li>Время отправки следующего сообщения: {{newsletter.start_time}}</li>
+                    {% endif %}
                 </ul>
                 <ul class="list-unstyled">
                     <li>

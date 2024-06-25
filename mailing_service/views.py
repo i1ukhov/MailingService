@@ -8,6 +8,10 @@ from mailing_service.models import Newsletter, Client, Message, NewsletterTry
 
 from mailing_service.forms import ClientForm, MessageForm, NewsletterForm, NewsletterModeratorForm
 
+from blog.models import Article
+
+import random
+
 
 class NewsletterListView(LoginRequiredMixin, ListView):
     model = Newsletter
@@ -84,6 +88,17 @@ class ClientDeleteView(LoginRequiredMixin, DeleteView):
 
 class Homepage(TemplateView):
     template_name = 'mailing_service/index.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context_data = super().get_context_data(*args, **kwargs)
+        context_data['total_newsletter_count'] = Newsletter.objects.all().count()
+        context_data['active_newsletter_count'] = Newsletter.objects.filter(is_active=True).exclude(
+            status='завершена').count()
+        context_data['unique_clients_count'] = Client.objects.all().count()
+        articles = list(Article.objects.all())
+        random.shuffle(articles)
+        context_data['some_articles'] = articles[0:3]
+        return context_data
 
 
 class MessageDetailView(LoginRequiredMixin, DetailView):
