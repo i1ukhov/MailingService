@@ -1,0 +1,18 @@
+{% extends 'mailing_service/base.html' %}
+{% block content %}
+<div class="row text-center">
+    <div class="col-12 col-xs-12">
+        <div class="card mb-3 box-shadow">
+            <div class="card-header">
+                <h5 class="my-0 font-weight-normal">Клиент №{{object.pk}}</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text"><strong>Имя:</strong> {{object.fullname}} </p>
+                <p class="card-text"><strong>Email:</strong> {{object.email}}</p>
+                <p class="card-text"><strong>Комментарий:</strong> {{object.comment}}</p>
+                <p class="card-text"><strong>Создан:</strong> {{object.owner}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

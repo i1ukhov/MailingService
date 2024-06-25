@@ -1,0 +1,13 @@
+<div class="d-grid mb-5 gap-5 d-md-flex justify-content-md-center">
+    {% if user.is_authenticated and not perms.mailing_service.can_view_clients %}
+    <a class="btn col-3 btn-outline-warning"
+       href="{% url 'mailing_service:message_create' %}"
+       role="button">Добавить сообщение</a>
+    <a class="btn col-3 btn-outline-secondary"
+       href="{% url 'mailing_service:client_create' %}"
+       role="button">Добавить Клиента</a>
+    <a class="btn col-3 btn-outline-info"
+       href="{% url 'mailing_service:newsletter_create' %}"
+       role="button">Новая рассылка</a>
+    {% endif %}
+</div>

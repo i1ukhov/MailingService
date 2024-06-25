@@ -1,0 +1,42 @@
+{% extends 'mailing_service/base.html' %}
+{% load my_tags %}
+{% block content %}
+
+<div class="row text-center">
+    <h4 class="text header mb-3">Добро пожаловать в сервис управления рассылками. Здесь вы можете добавлять клиентов и
+        сообщения, а также создавать рассылки сообщений для своих клиентов.</h4>
+
+</div>
+<div class="row text-center">
+    <h5 class="text header mb-2">Общее количество рассылок на сервисе: {{total_newsletter_count}} </h5>
+</div>
+<div class="row text-center">
+    <h5 class="text header mb-2">Количество активных рассылок на сервисе: {{active_newsletter_count}} </h5>
+</div>
+<div class="row text-center">
+    <h5 class="text header mb-5">Количество уникальных клиентов сервиса: {{unique_clients_count}} </h5>
+</div>
+
+<div class="row text-center">
+    <h4 class="text header mb-5">Это может быть интересно: </h4>
+</div>
+
+<div class="row">
+    {% for article in some_articles %}
+    <div class="col-4 col-xs-12">
+        <div class="card mb-3 box-shadow">
+            <img src="{{ article.preview | media_filter }}" class="rounded float-start">
+            <div class="card-header">
+                <h5 class="my-0 font-weight-normal">{{ article.title }}</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">{{ article.content|truncatechars:100 }}</p>
+                <p class="card-text">Дата: {{ article.created_at}}</p>
+                <p class="card-text">Просмотров: {{ article.views_count }}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
