@@ -7,9 +7,15 @@
                 <h5 class="my-0 font-weight-normal">Рассылка №{{object.pk}}</h5>
             </div>
             <div class="card-body">
-                <p class="card-text">Время начала/завершения: {{object.start_time}} - {{object.end_time}} </p>
-                <p class="card-text">Статус: {{object.status}} </p>
-                <p class="card-text">Частота отправки: {{object.frequency}}</p>
+                <p class="card-text"><strong>Время начала/завершения:</strong> {{object.start_time}} - {{object.end_time}} </p>
+                <p class="card-text"><strong>Статус:</strong> {{object.status}} </p>
+                <p class="card-text"><strong>Частота отправки:</strong> {{object.frequency}}</p>
+                <p class="card-text"><strong>Создан:</strong> {{object.owner}}</p>
+                {% if object.is_active %}
+                <p class="card-text"><strong>Активна</strong></p>
+                {% else %}
+                <p class="card-text"><strong>Заблокирована. Обратитесь к модератору</strong></p>
+                {% endif %}
             </div>
         </div>
     </div>

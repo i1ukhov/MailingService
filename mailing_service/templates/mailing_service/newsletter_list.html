@@ -2,31 +2,41 @@
 {% block content %}
 {% include 'mailing_service/includes/inc_buttons.html' %}
 <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
-    {% for object in object_list %}
+    {% for newsletter in object_list %}
+    {% if perms.mailing_service.can_view_newsletters or user == newsletter.owner %}
     <div class="col">
         <div class="card mb-4 rounded-3 shadow-sm">
             <div class="card-header py-3">
-                <h4 class="my-0 fw-normal"> Рассылка №{{object.pk}} </h4>
+                <h4 class="my-0 fw-normal"> Рассылка №{{newsletter.pk}} </h4>
             </div>
             <div class="card-body">
                 <ul class="list-unstyled">
-                    <li>Статус: {{object.status}}</li>
-                    <li>Частота отправки: {{object.frequency}}</li>
-                    <li>Время начала/завершения: {{object.start_time}} - {{object.end_time}}</li>
+                    <li>Статус: {{newsletter.status}}</li>
+                    <li>Частота отправки: {{newsletter.frequency}}</li>
+                    <li>Время начала/завершения: {{newsletter.start_time}} - {{newsletter.end_time}}</li>
                 </ul>
                 <ul class="list-unstyled">
                     <li>
-                        <a class="btn btn-primary mb-2" href="{% url 'mailing_service:newsletter_detail' object.pk %}"
+                        <a class="btn btn-primary mb-2"
+                           href="{% url 'mailing_service:newsletter_detail' newsletter.pk %}"
                            role="button">Подробнее</a>
                     </li>
-                    <li><a class="btn btn-secondary mb-2" href="{% url 'mailing_service:newsletter_update' object.pk %}"
-                           role="button">Редактировать</a></li>
-                    <li><a class="btn btn-danger" href="{% url 'mailing_service:newsletter_delete' object.pk %}"
-                           role="button">Удалить</a></li>
+                    <li>
+                        <a class="btn btn-secondary mb-2"
+                           href="{% url 'mailing_service:newsletter_update' newsletter.pk %}"
+                           role="button">Редактировать</a>
+                    </li>
+                    {% if user == newsletter.owner %}
+                    <li>
+                        <a class="btn btn-danger" href="{% url 'mailing_service:newsletter_delete' newsletter.pk %}"
+                           role="button">Удалить</a>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
     </div>
+    {% endif %}
     {% endfor %}
 </div>
 {% endblock %}

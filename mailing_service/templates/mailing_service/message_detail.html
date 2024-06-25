@@ -1,0 +1,17 @@
+{% extends 'mailing_service/base.html' %}
+{% block content %}
+<div class="row text-center">
+    <div class="col-12 col-xs-12">
+        <div class="card mb-3 box-shadow">
+            <div class="card-header">
+                <h5 class="my-0 font-weight-normal">Сообщение №{{object.pk}}</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text"><strong>Заголовок:</strong> {{object.subject}} </p>
+                <p class="card-text"><strong>Содержание:</strong> {{object.body}}</p>
+                <p class="card-text"><strong>Создан:</strong> {{object.owner}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

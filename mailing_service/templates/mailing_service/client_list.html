@@ -2,24 +2,38 @@
 {% block content %}
 {% include 'mailing_service/includes/inc_buttons.html' %}
 <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
-    {% for object in object_list %}
+    {% for client in object_list %}
+    {% if perms.mailing_service.can_view_clients or user == client.owner %}
     <div class="col">
         <div class="card mb-4 rounded-3 shadow-sm">
             <div class="card-header py-3">
-                <h4 class="my-0 fw-normal">{{object.fullname}}</h4>
+                <h4 class="my-0 fw-normal">{{client.fullname}}</h4>
             </div>
             <div class="card-body">
-                <ul class="list-unstyled mt-3 mb-5">
-                    <li>Email: {{object.email}}</li>
-                    <li>Комментарий: {{object.comment}}</li>
+                <ul class="list-unstyled">
+                    <li>Email: {{client.email}}</li>
+                    <li>Комментарий: {{client.comment}}</li>
                 </ul>
-                <a class="btn btn-secondary" href="{% url 'mailing_service:client_update' object.pk %}"
-                   role="button">Редактировать</a>
-                <a class="btn btn-danger" href="{% url 'mailing_service:client_delete' object.pk %}"
-                   role="button">Удалить</a>
+                <ul class="list-unstyled">
+                    <li>
+                        <a class="btn btn-primary mb-2" href="{% url 'mailing_service:client_detail' client.pk %}"
+                           role="button">Подробнее</a>
+                    </li>
+                    {% if user == client.owner %}
+                    <li>
+                        <a class="btn btn-secondary mb-2" href="{% url 'mailing_service:client_update' client.pk %}"
+                           role="button">Редактировать</a>
+                    </li>
+                    <li>
+                        <a class="btn btn-danger" href="{% url 'mailing_service:client_delete' client.pk %}"
+                           role="button">Удалить</a>
+                    </li>
+                    {% endif %}
+                </ul>
             </div>
         </div>
     </div>
+    {% endif %}
     {% endfor %}
 </div>
 {% endblock %}

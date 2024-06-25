@@ -16,16 +16,22 @@ class FormStyleMixin:
 class ClientForm(FormStyleMixin, ModelForm):
     class Meta:
         model = Client
-        fields = '__all__'
+        exclude = ('owner',)
 
 
 class MessageForm(FormStyleMixin, ModelForm):
     class Meta:
         model = Message
-        fields = '__all__'
+        exclude = ('owner',)
 
 
 class NewsletterForm(FormStyleMixin, ModelForm):
     class Meta:
         model = Newsletter
-        fields = '__all__'
+        exclude = ('owner', 'is_active')
+
+
+class NewsletterModeratorForm(FormStyleMixin, ModelForm):
+    class Meta:
+        model = Newsletter
+        fields = ('is_active',)

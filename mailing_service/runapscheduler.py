@@ -1,7 +1,7 @@
 import smtplib
 from datetime import datetime, timedelta
 
-import pytz as pytz
+import pytz
 import logging
 
 from django.conf import settings
@@ -32,7 +32,8 @@ def send_mailing():
     newsletters = Newsletter.objects.all()
 
     for newsletter in newsletters:
-        if newsletter.start_time < current_datetime < newsletter.end_time or newsletter.status == 'завершена':
+        if newsletter.start_time <= current_datetime < newsletter.end_time and newsletter.status != 'завершена'\
+                and newsletter.is_active:
             clients = newsletter.client.all()
             clients_emails = [clients.email for clients in clients]
             message_subject = newsletter.message.subject
@@ -69,7 +70,7 @@ def send_mailing():
             elif newsletter.frequency == 'раз в месяц':
                 newsletter.start_time += timedelta(days=30, hours=0, minutes=0)
 
-        elif current_datetime > newsletter.end_time or newsletter.start_time > newsletter.end_time:
+        elif current_datetime >= newsletter.end_time or newsletter.start_time > newsletter.end_time:
             newsletter.status = 'завершена'
 
         elif current_datetime < newsletter.start_time:
