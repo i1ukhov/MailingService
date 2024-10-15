@@ -1,4 +1,10 @@
-## Курсовая работа по Django. Сервис для email-рассылок
+## Стэк используемых технологий
+Frontend: HTML, CSS, Bootstrap, JavaScript
+
+Backend: Python, Django, PostgreSQL, Git, Docker, Redis, Django-apscheduler
+
+
+## Сервис для email-рассылок
 ![coursework main page](https://github.com/i1ukhov/DjangoCoursework/assets/96483139/dd587dd7-6b88-4a60-aac7-da79e4e50034)
 
 ### Запуск:
